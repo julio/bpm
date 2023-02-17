@@ -12,7 +12,7 @@ class BPM extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'What is that BPM',
-      home: BPMCounter(title: 'What is that BPM'),
+      home: BPMCounter(title: 'BPM'),
     );
   }
 }
@@ -30,25 +30,44 @@ class _BPMCounter extends State<BPMCounter> {
   int _bpm = 0;
   int _bpm_old_max = 0;
   int _bpm_max = 0;
+  
+  int _msecsFirst = 0;
+  int _msecsPrevious = 0;
+  int _count = 0;
+
   Stopwatch s = new Stopwatch();
 
   void _increment() {
     setState(() {
-      if (!s.isRunning) {
-        s.start();
-     } 
-      //else {
-        _bpm = _n_taps ~/ (s.elapsedMicroseconds / 60000000);
-      //}
-      if (_bpm_max < _bpm) {
-        _bpm_max = _bpm;
-      }
-      _n_taps++;
+      _tap_for_bpm();
     });
+  }
+
+  void _tap_for_bpm() {
+  if (!s.isRunning) {
+    _count = 0;
+    s.start();
+   } else {
+   
+   }
+  }
+
+  void _tap_for_bpm_old() {
+    if (!s.isRunning) {
+        s.start();
+    } else {
+      _bpm = _n_taps ~/ (s.elapsedMicroseconds / 60000000);
+    }
+    if (_bpm_max < _bpm) {
+      _bpm_max = _bpm;
+    }
+    _n_taps++;
   }
 
   void _reset() {
     setState(() {
+      _count = 0;
+
       _m_taps = _n_taps;
       _n_taps = 0;
       _bpm_old_max = _bpm_max;
@@ -63,7 +82,7 @@ class _BPMCounter extends State<BPMCounter> {
     return Scaffold(
       backgroundColor: Colors.purple,
       appBar: AppBar(
-        title: const Text('What is that BPM'),
+        title: const Text('BPM'),
         backgroundColor: Colors.pink,
       ),
       body: Column(
@@ -73,14 +92,6 @@ class _BPMCounter extends State<BPMCounter> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-//              Container(
-//                width: 40,
-//                child: Text(
-//                  '$_n_taps',
-//                  style: TextStyle(color: Colors.white),
-//                  textAlign: TextAlign.right,
-//                ),
-//              ),
               Container(
                 width: 200,
                 child: Row(
@@ -94,54 +105,11 @@ class _BPMCounter extends State<BPMCounter> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-//                    Container(
-//                      width: 100,
-//                      child: Text(
-//                        ' BPM',
-//                        style: TextStyle(color: Colors.white, fontSize: 50),
-//                        textAlign: TextAlign.left,
-//                      ),
-//                    ),
                   ],
                 ),
               ),
- //             Container(
- //               width: 40,
- //               child: Text(
- //                 '$_m_taps',
- //                 style: TextStyle(color: Colors.white),
- //                 textAlign: TextAlign.right,
- //               ),
- //             ),
             ],
           ),
- //         Row(
- //           mainAxisAlignment: MainAxisAlignment.spaceAround,
- //           children: <Widget>[
- //            Container(
- //               width: 40,
- //               child: Text(
- //                 '$_bpm_max',
- //                 style: TextStyle(color: Colors.white),
- //                 textAlign: TextAlign.right,
- //               ),
- //             ),
- //             SizedBox(
- //               width: 200,
- //             ),
- //             Container(
- //               width: 40,
- //               child: Text(
- //                 '$_bpm_old_max',
- //                 style: TextStyle(color: Colors.white),
- //                 textAlign: TextAlign.right,
- //               ),
- //             ),
- //           ],
- //         ),
-//          const SizedBox(
-//            width: double.infinity,
-//          ),
           RawMaterialButton(
             onPressed: _increment,
             splashColor: Colors.purple,
@@ -157,7 +125,7 @@ class _BPMCounter extends State<BPMCounter> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _reset,
-        child: Text('new'),
+        child: const Icon(Icons.navigation),
         backgroundColor: Colors.black,
       ),
     );
