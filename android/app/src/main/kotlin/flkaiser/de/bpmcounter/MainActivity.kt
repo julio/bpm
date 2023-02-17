@@ -1,4 +1,4 @@
-package flkaiser.de.bpmcounter
+package com.morgane.bpm
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
