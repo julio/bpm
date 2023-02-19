@@ -5,9 +5,9 @@ class DrawCircle extends CustomPainter {
 
   DrawCircle() {
     _paint = Paint()
-      ..color = Color.fromRGBO(92, 184, 92, 0.2)
+      ..color       = Color.fromRGBO(92, 184, 92, 0.2)
       ..strokeWidth = 10.0
-      ..style = PaintingStyle.fill;
+      ..style       = PaintingStyle.fill;
   }
 
   @override

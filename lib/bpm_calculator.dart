@@ -4,15 +4,15 @@ import 'draw_circle.dart';
 
 class BPMCalculator extends StatefulWidget {
   BPMCalculator({Key? key, required this.title}) : super(key: key);
+  
   final String title;
   @override
   _BPMCalculator createState() => _BPMCalculator();
 }
 
 class _BPMCalculator extends State<BPMCalculator> {
-  int _n_taps = 0;
-  int _bpm = 0;
-  
+  int _n_taps          = 0;
+  int _bpm             = 0;
   Stopwatch _stopwatch = new Stopwatch();
 
   void _increment() {
@@ -23,16 +23,17 @@ class _BPMCalculator extends State<BPMCalculator> {
 
   void _tap() {
     _stopwatch.start();
-      double seconds = _stopwatch.elapsedMicroseconds / 60000000;
-      _bpm = _n_taps ~/ seconds;
-      // print('seconds = $seconds | bpm = $_bpm | _n_taps = $_n_taps');
+
+    double elapsed_in_minutes = _stopwatch.elapsedMicroseconds / 60000000;
+    _bpm = _n_taps ~/ elapsed_in_minutes;
     _n_taps++;
   }
 
   void _reset() {
     setState(() {
       _n_taps = 0;
-      _bpm = 0;
+      _bpm    = 0;
+
       _stopwatch.reset();
       _stopwatch.stop();
     });
